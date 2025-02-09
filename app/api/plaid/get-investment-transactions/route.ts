@@ -10,10 +10,14 @@ export async function POST(req: NextRequest) {
     const { access_token } = await req.json();
     const response = await plaidClient.investmentsTransactionsGet({
       access_token,
-      start_date: '2023-01-01',
-      end_date: new Date().toISOString().split('T')[0]
+      start_date: '2020-01-01',
+      end_date: new Date().toISOString().split('T')[0],
+      options: {
+        count: 6
+      }
     });
     return NextResponse.json({ 
+      item: response.data.item,
       accounts: response.data.accounts, 
       securities: response.data.securities, 
       investment_transactions: response.data.investment_transactions, 
